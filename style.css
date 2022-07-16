@@ -1,4 +1,4 @@
-:root {
+/* :root {
   --hue-neutral: 200;
   --hue-wrong: 0;
   --hue-correct: 145;
@@ -60,7 +60,7 @@ body.wrong {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+}*/
 .hide {
   display: none;
 }
