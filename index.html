@@ -7,26 +7,30 @@
     <link rel="stylesheet" href="style.css" />
     <title>Gamer Zone</title>
   </head>
-  <div class="container">
-    <div id="timerEl" class="hide"></div>
-    <div id="scoreEl" class="hide"></div>
-    <div id="question-container" class="hide">
-      question will be here
-      <div id="answer-buttons" class="btn-grid">
-        <!-- <button class="btn">Answer 1</button>
+  <body>
+    <div class="container">
+      <div id="timerEl" class="hide"></div>
+      <div id="scoreEl" class="hide"></div>
+      <div id="question-container" class="hide">
+        <h2 id="question-text"></h2>
+        <div id="answer-buttons" class="btn-grid">
+          <!-- <button class="btn">Answer 1</button>
         <button class="btn">Answer 1</button>
         <button class="btn">Answer 1</button>
         <button class="btn">Answer 1</button> -->
+        </div>
       </div>
-    </div>
 
-    <button id="start-btn" class="start-btn btn">Start</button>
-    <button id="next-btn" class="next-btn btn hide">Next</button>
-
-    <div class="score">
-      <span id="right-answers"></span>
+      <button id="start-btn" class="start-btn btn">Start</button>
+      <!-- <button id="next-btn" class="next-btn btn hide">Next</button> -->
     </div>
-  </div>
-  <script src="script.js"></script>
-  <body></body>
+    <div id="end-game" class="hide">
+      game over
+      <form id="submit-form">
+        <input type="text" placeholder="Enter Your Name" />
+        <button type="submit">Submit!</button>
+      </form>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -1,19 +1,59 @@
 var startBtn = document.getElementById("start-btn");
+startBtn.addEventListener("click", startGame);
 var nextBtn = document.getElementById("next-btn");
 var timerEl = document.getElementById("timerEl");
 var scoreEl = document.getElementById("scoreEl");
-startBtn.addEventListener("click", startGame);
+var questionContainer = document.getElementById("question-container");
+var questionText = document.getElementById("question-text");
+var answerButtonsContainer = document.getElementById("answer-buttons");
+var submitForm = document.getElementById("submit-form");
+submitForm.addEventListener("submit", saveScore);
+var endPage = document.getElementById("end-game");
+
+var questions = [
+  {
+    text: "What is Jude's favorite color?",
+    answers: {
+      a: "blue",
+      b: "green",
+      c: "purple",
+      d: "red",
+    },
+    correctAnswer: "c",
+  },
+  {
+    text: "Which one of the following is not one of my children's names?",
+    answers: {
+      a: "Sam",
+      b: "Atias",
+      c: "Soleia",
+      d: "Kanin",
+    },
+    correctAnswer: "a",
+  },
+  {
+    text: "Is it sunny today?",
+    answers: {
+      a: "yes",
+      b: "no",
+      c: "maybe",
+      d: "probably",
+    },
+    correctAnswer: "d",
+  },
+];
 
 //Game Variables
 var score = 0;
-var secondsRemaining = 5;
+var secondsRemaining = 30;
+var timer;
+var currentQuestionIndex = 0;
 
 function startGame() {
   console.log("start the game");
   // hide the startBtn
   startBtn.classList.add("hide");
   //show the next btn
-  nextBtn.classList.remove("hide");
   //populate timer el with text content seconds remaining
   timerEl.textContent = `time left: ${secondsRemaining}`;
   //unhide the timer
@@ -22,131 +62,79 @@ function startGame() {
   scoreEl.textContent = `Score: ${score}`;
   //show the score
   scoreEl.classList.remove("hide");
+  //show question contaner
+  questionContainer.classList.remove("hide");
   // start timer
+  timer = setInterval(function () {
+    secondsRemaining--;
+    timerEl.textContent = `time left: ${secondsRemaining}`;
+
+    //check if out of time, end the GAme
+    if (secondsRemaining <= 0) {
+      endGame();
+    }
+  }, 1000);
+
   //display first question
+  displayQuestion();
 }
 
-// const nextBtn = document.getElementById("nextBtn");
+function displayQuestion() {
+  questionText.innerText = questions[currentQuestionIndex].text;
 
-// const questionContainerElement = document.getElementById("question-container");
-// const qustionElement = document.getElementById("question");
-// const answerBtnElement = document.getElementById("answer-buttons");
+  //loop over the current Questions' answers and generate a button for each one
 
-// let shuffledQuestions, currentQuestionIndex;
-// let quizScore = 0;
+  var theseAnswers = questions[currentQuestionIndex].answers;
 
-//
-// nextButton.addEventListener("click", () => {
-//   currentQuestionIndex++;
-//   setNextQuestion();
-// });
+  answerButtonsContainer.innerHTML = "";
 
-// function setNextQuestion() {
-//   resetState();
-//   showQuestion(shuffledQuestions[currentQuestionIndex]);
-// }
+  for (var answer in theseAnswers) {
+    var answerBtn = document.createElement("button");
+    answerBtn.innerText = theseAnswers[answer];
+    answerBtn.dataset.bloop = answer;
+    answerBtn.addEventListener("click", evaluateAnswer);
+    answerButtonsContainer.appendChild(answerBtn);
+  }
+}
 
-// function startGame() {
-//   startButton.classList.add("hide");
-//   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
-//   currentQuestionIndex = 0;
-//   questionContainerElement.classList.remove("hide");
-//   setNextQuestion();
-//   quizScore = 0;
-// }
+function evaluateAnswer(e) {
+  //evaluate if right or wrong
+  if (
+    e.target.dataset.bloop === questions[currentQuestionIndex].correctAnswer
+  ) {
+    //add 10 points
+    score += 10;
+    scoreEl.textContent = `Score: ${score}`;
+  } else {
+    score -= 10;
+    scoreEl.textContent = `Score: ${score}`;
+    secondsRemaining -= 5;
+    timerEl.textContent = `time left: ${secondsRemaining}`;
 
-// function showQuestion(question) {
-//   questionElement.innerText = question.question;
-//   question.answers.forEach((answer) => {
-//     const button = document.createElement("button");
-//     button.innerText = answer.text;
-//     button.classList.add("btn");
-//     if (answer.correct) {
-//       button.dataset.correct = answer.correct;
-//     }
-//     button.addEventListener("click", selectAnswer);
-//     answersButtonElement.appendChild(button);
-//   });
-// }
+    if (secondsRemaining <= 0) {
+      endGame();
+    }
+  }
 
-// function resetState() {
-//   clearStatusClass(document.body);
-//   nextButton.classList.add("hide");
-//   while (answerBtnElement.firstChild) {
-//     answerBtnElement.removeChild(answerBtnElement.firstChild);
-//   }
-// }
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    displayQuestion();
+  } else endGame();
+}
 
-// function selectAnswer(e) {
-//   const selectedButton = e.target;
-//   const correct = selectedButton.dataset.correct;
+function endGame() {
+  clearInterval(timer);
+  endPage.classList.remove("hide");
+  questionContainer.classList.add("hide");
+}
 
-//   setStatusClass = (document.body, correct);
-//   Array.from(answersButtonElement.children).forEach((button) => {
-//     setStatusClass(button, button.dataset.correct);
-//   });
-//   if (shuffledQuestions.length > currentQuestionIndex + 1) {
-//     nextButton.classList.remove("hide");
-//   } else {
-//     startButton.innerText = "restart";
-//     startButton.classList.remove("hide");
-//   }
-//   if ((selectedButton.dataset = correct)) {
-//     quizScore++;
-//   }
-//   document.getElementById("right-answers").innerText = quizScore;
-// }
-
-// function setStatusClass(element, correct) {
-//   clearStatusClass(element);
-//   if (correct) {
-//     element.classList.add("correct");
-//   } else {
-//     element.classList.add("wrong");
-//   }
-// }
-
-// function clearStatusClass(element) {
-//   element.classList.remove("correct");
-//   element.classList.remove("wrong");
-// }
-
-// const questions = [
-//   {
-//     question: "which one of these is a Javascript framework?",
-//     answers: [
-//       { text: "Python", correct: false },
-//       { text: "Django", correct: false },
-//       { text: "React", correct: true },
-//       { text: "Eclispe", correct: false },
-//     ],
-//   },
-//   {
-//     question: "who is the prime minster of India?",
-//     answers: [
-//       { text: "Python", correct: false },
-//       { text: "Django", correct: false },
-//       { text: "React", correct: true },
-//       { text: "Eclispe", correct: false },
-//     ],
-//   },
-//   {
-//     question: "which one of these is a Javascript framework?",
-//     answers: [
-//       { text: "Python", correct: false },
-//       { text: "Django", correct: false },
-//       { text: "React", correct: true },
-//       { text: "Eclispe", correct: false },
-//     ],
-//   },
-
-//   {
-//     question: "which one of these is a Javascript framework?",
-//     answers: [
-//       { text: "Python", correct: false },
-//       { text: "Django", correct: false },
-//       { text: "React", correct: true },
-//       { text: "Eclispe", correct: false },
-//     ],
-//   },
-// ];
+function saveScore(e) {
+  e.preventDefault();
+  var arrayToSave = [];
+  if (localStorage.getItem("quiz-scores")) {
+    arrayToSave = JSON.parse(localStorage.getItem("quiz-scores"));
+  }
+  var newScore = { username: e.target.children[0].value, score };
+  arrayToSave.push(newScore);
+  localStorage.setItem("quiz-scores", JSON.stringify(arrayToSave));
+}
