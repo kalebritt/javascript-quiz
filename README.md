@@ -2,8 +2,6 @@
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-
 - What was your motivation?
   I made this app to practice javascript functions and html.
 - Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
@@ -24,14 +22,12 @@ Provide a short description explaining the what, why, and how of your project. U
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+The screenshot is of the app after a game has been played and the score saved of player 'cl'omp.'
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
 
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
+![alt text] (assets/images/quizscreenshot.png)
 
+  
 ## Credits
 
 I'd like to thank the wise and knowledgeable Jude C. for her tremendous support, advice, and assistance. Simply impossible without her.
