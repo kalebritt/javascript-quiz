@@ -27,3 +27,6 @@ The screenshot is of the app after a game has been played and the score saved of
 ## Credits
 
 I'd like to thank the wise and knowledgeable Jude C. for her tremendous support, advice, and assistance. Simply impossible without her.
+
+Play the game here:
+https://kalebritt.github.io/javascript-quiz/
